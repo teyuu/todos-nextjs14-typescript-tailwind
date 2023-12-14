@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Todo } from '../models/models'
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 import { MdDone } from 'react-icons/md'
+import { motion } from 'framer-motion'
 
 interface props {
   todo: Todo
@@ -32,15 +33,15 @@ const SingleTodo: React.FC<props> = ({ todo, todos, setTodos }) => {
   const handleEdit = (e: React.FormEvent, id: number) => {
     e.preventDefault()
 
-   setTodos(
+    setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
     )
     setEdit(false)
   }
 
-  const handleEditClick=(e: React.FormEvent, id: number)=>{
+  const handleEditClick = (e: React.FormEvent, id: number) => {
     setEdit(!edit)
-    if(editTodo){
+    if (editTodo) {
       handleEdit(e, todo.id)
     }
   }
@@ -67,26 +68,42 @@ const SingleTodo: React.FC<props> = ({ todo, todos, setTodos }) => {
       <div className="flex text-2xl gap-4">
         {!edit ? (
           <>
-            <span
+            {/* Done button  */}
+            <motion.span
               onClick={() => handleDone(todo.id)}
-              className=" cursor-pointer"
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ cursor: 'pointer', scale: 1.5 }}
             >
               <MdDone />
-            </span>
-            <span onClick={() => setEdit(!edit)} className=" cursor-pointer">
+            </motion.span>
+            {/* EDIT BUTTON  */}
+            <motion.span
+              onClick={() => setEdit(!edit)}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ cursor: 'pointer', scale: 1.5 }}
+            >
               <AiFillEdit />
-            </span>
-            <span
+            </motion.span>
+            {/* DELETE BUTTON */}
+            <motion.span
               onClick={() => handleDelete(todo.id)}
               className=" cursor-pointer"
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ cursor: 'pointer', scale: 1.5 }}
             >
               <AiFillDelete />
-            </span>
+            </motion.span>
           </>
         ) : (
-          <span onClick={(e) => handleEditClick(e, todo.id) }  className=" cursor-pointer">
+          //Edit button
+          <motion.span
+            onClick={(e) => handleEditClick(e, todo.id)}
+            className=" cursor-pointer"
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ cursor: 'pointer', scale: 1.5 }}
+          >
             <AiFillEdit />
-          </span>
+          </motion.span>
         )}
       </div>
     </div>
